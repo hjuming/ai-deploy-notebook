@@ -5,87 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- 
-    ⭐️ [SEO 優化] 1. 網頁標題 (Title)
-    我們使用更精確、包含關鍵字的標題，告訴搜尋引擎「這頁在講什麼」。
+    ✅ [SEO 優化] 1. 網頁標題
+    使用精準、包含關鍵字的標題
   -->
   <title>AI 助理安全部署教學：保護 API 金鑰與前後台串接 (Cloudflare &amp; Google AI)</title>
 
   <!-- 
-    ⭐️ [SEO 優化] 2. 網頁描述 (Description)
-    這會顯示在 Google 搜尋結果的標題下方。
+    ✅ [SEO 優化] 2. 網頁描述 (Description)
   -->
   <meta name="description" content="一份給程式碼初學者的 AI 助理部署筆記。教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。">
 
   <!-- 
-    ⭐️ [SEO 優化] 3. 關鍵字 (Keywords)
+    ✅ [SEO 優化] 3. 關鍵字 (Keywords)
   -->
-  <meta name="keywords" content="AI 助理, API 金鑰, Cloudflare Workers, Google Gemini, 前後台分離, API 安全, 部署教學, 程式碼初學者, Missing API Key, Model Not Found">
+  <meta name="keywords" content="AI 助理, API 金鑰, Cloudflare Workers, Google Gemini, 前後台分離, API 安全, 部署教學, 程式碼初學者, Missing API Key, Model Not Found, hjuming, 嶼野山隱">
 
   <!-- 
-    ⭐️ [SEO 優化] 4. Open Graph (社群分享標籤)
-    當你把網址貼到 Facebook, LINE, Discord 時，會顯示這些資訊。
+    ✅ [SEO 優化] 4. Open Graph (社群分享標籤)
+    已更新為你提供的網址和圖片！
   -->
-  <meta property="og:title" content="AI 助理安全部署教學：保護 API 金鑰 (v3)">
+  <meta property="og:title" content="AI 助理安全部署教學：保護 API 金鑰 (v4)">
   <meta property="og:description" content="教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。">
   <meta property="og:type" content="article">
-  <!-- ⭐️ 記得把這個網址換成你部署後的「真實網址」 -->
-  <meta property="og:url" content="https://...你的網址.../ai-learning-notebook-v3.html">
-  <meta property="og:image" content="https://placehold.co/1200x630/0d9488/ffffff?text=AI+%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E7%AD%86%E8%A8%98">
-  
+  <!-- ✅ 已更新為你的部署網址 -->
+  <meta property="og:url" content="https://ai-deploy-notebook.pages.dev/">
+  <!-- ✅ 已更新為你提供的圖片 -->
+  <meta property="og:image" content="https://i.urusai.cc/odvsO.jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="zh_TW">
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI 助理安全部署教學：保護 API 金鑰 (v3)">
+  <meta name="twitter:title" content="AI 助理安全部署教學：保護 API 金鑰 (v4)">
   <meta name="twitter:description" content="教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台。">
-  <meta name="twitter:image" content="https://placehold.co/1200x630/0d9488/ffffff?text=AI+%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E7%AD%86%E8%A8%98">
+  <!-- ✅ 已更新為你提供的圖片 -->
+  <meta name="twitter:image" content="https://i.urusai.cc/odvsO.jpeg">
 
   <!-- 
-    ⭐️ [SEO 優化] 5. 標準網址 (Canonical)
-    告訴 Google 哪個是「真正」的網址，避免重複內容。
-    ⭐️ 記得把這個網址換成你部署後的「真實網址」
+    ✅ [SEO 優化] 5. 標準網址 (Canonical)
+    已更新為你部署後的「真實網址」
   -->
-  <link rel="canonical" href="https://...你的網址.../ai-learning-notebook-v3.html">
+  <link rel="canonical" href="https://ai-deploy-notebook.pages.dev/">
 
 
   <!-- 網頁樣式 (Tailwind & Fonts) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;5S00;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Noto Sans TC', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    /* 導覽列的錨點偏移 (避免被蓋住) */
     [id] { scroll-margin-top: 6rem; }
-    .content h1 { font-size: 1.75rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #10b981; padding-bottom: 0.5rem; }
+    
+    /* ✅ [版面調整] 1. 統一內容排版
+    */
+    .content h1 { 
+      font-size: 1.75rem; /* 28px */ 
+      font-weight: 700; 
+      margin-top: 2rem; 
+      margin-bottom: 1rem; 
+      border-bottom: 2px solid #10b981; 
+      padding-bottom: 0.5rem;
+      /* ✅ 增加圖示間距 */
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
     .content h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; }
     .content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
     .content p { font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
     .content code { background-color: #f3f4f6; color: #db2777; padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.9em; word-break: break-all; }
     .content pre { background-color: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
     .content pre code { background-color: transparent; color: inherit; padding: 0; }
-    .content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
-    .content ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
+    .content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; padding-left: 0.5rem; }
+    .content ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; padding-left: 0.5rem; }
     .content .highlight { background-color: #fffbeb; color: #b45309; padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-weight: 600; }
     .content .error-msg { background-color: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; overflow-x: auto; }
-    /* FAQ 手風琴樣式 */
-    .faq-question { cursor: pointer; }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-    .faq-question.active + .faq-answer { max-height: 500px; /* 設一個足夠大的高度 */ }
-    .faq-question .faq-icon { transition: transform 0.3s ease-out; }
-    .faq-question.active .faq-icon { transform: rotate(180deg); }
     
+    /* ✅ [版面調整] 2. FAQ 折疊表單樣式 (更精緻)
+    */
+    .faq-question { 
+      cursor: pointer; 
+      transition: background-color 0.2s ease-out;
+    }
+    .faq-question:hover {
+      background-color: #f9fafb;
+    }
+    .faq-answer { 
+      max-height: 0; 
+      overflow: hidden; 
+      transition: max-height 0.3s ease-out, padding 0.3s ease-out; 
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    /* 當 active 時，展開答案 */
+    .faq-question.active + .faq-answer { 
+      max-height: 500px; /* 設一個足夠大的高度 */ 
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
+    /* 圖示旋轉 */
+    .faq-question .faq-icon { 
+      transition: transform 0.3s ease-out; 
+    }
+    .faq-question.active .faq-icon { 
+      transform: rotate(180deg); 
+    }
+    
+    /* 響應式字體調整 */
     @media (min-width: 640px) {
       .content h1 { font-size: 2.25rem; } .content h2 { font-size: 1.875rem; } .content h3 { font-size: 1.5rem; }
       .content p { font-size: 1.125rem; } .content ul { font-size: 1.125rem; } .content ol { font-size: 1.125rem; }
     }
-    .nav-button { transition: all 0.2s ease-in-out; }
-    .nav-button:hover { background-color: #d1fae5; color: #065f46; transform: translateY(-2px); }
+    
+    /* 導覽按鈕樣式 */
+    .nav-button { 
+      transition: all 0.2s ease-in-out; 
+    }
+    .nav-button:hover { 
+      background-color: #d1fae5; 
+      color: #065f46; 
+      transform: translateY(-2px);
+    }
   </style>
 
   <!-- 
-    ⭐️ [AIO 優化] 1. Article Schema
-    這等於是幫 AI 搜尋引擎「劃重點」，告訴它這是一篇有價值的技術文章。
+    ✅ [AIO 優化] 1. Article Schema
+    已更新為你的真實網址和圖片
   -->
   <script type="application/ld+json">
   {
@@ -93,9 +144,9 @@
     "@type": "TechArticle",
     "headline": "AI 助理安全部署教學：保護 API 金鑰與前後台串接 (Cloudflare & Google AI)",
     "description": "一份給程式碼初學者的 AI 助理部署筆記。教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。",
-    "image": "https://placehold.co/1200x630/0d9488/ffffff?text=AI+%E9%83%A8%E7%BD%B2%E5%AE%89%E5%85%A8%E7%AD%86%E8%A8%98",
+    "image": "https://i.urusai.cc/odvsO.jpeg",
     "datePublished": "2025-11-03T02:00:00+08:00",
-    "dateModified": "2025-11-03T02:00:00+08:00",
+    "dateModified": "2025-11-03T02:20:00+08:00",
     "author": {
       "@type": "Person",
       "name": "程式夥伴 (AI 助理)"
@@ -105,12 +156,12 @@
       "name": "Hjuming's Learning Notebook",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://placehold.co/600x60/0d9488/ffffff?text=My+Notebook"
+        "url": "https://i.imgur.com/g.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://...你的網址.../ai-learning-notebook-v3.html"
+      "@id": "https://ai-deploy-notebook.pages.dev/"
     }
   }
   </script>
@@ -141,7 +192,6 @@
           <a href="#architecture" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">安全架構</a>
           <a href="#tutorial" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">實戰教學</a>
           <a href="#debugging" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">除錯之旅</a>
-          <!-- ⭐️ 新增 FAQ 連結 ⭐️ -->
           <a href="#faq" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">常見問題 (FAQ)</a>
           <a href="#conclusion" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">總結</a>
         </div>
@@ -160,7 +210,6 @@
   </nav>
 
   <!-- Main Content -->
-  <!-- ⭐️ 加上 <article> 標籤，有助於 AIO -->
   <article class="max-w-5xl mx-auto p-4 sm:p-6 content">
 
     <!-- Introduction -->
@@ -170,7 +219,8 @@
 
     <!-- Part 1: The Big Mistake -->
     <section id="danger">
-      <h1>🚨 最大的危險：千萬別把「金鑰」放在前端 (index.html)！</h1>
+      <!-- ✅ [版面調整] 增加標題圖示 -->
+      <h1><i class="fas fa-exclamation-triangle text-red-500"></i>最大的危險：千萬別把「金鑰」放在前端 (index.html)！</h1>
       <p>這是我們學到的**第一課，也是最重要的一課**。API 金鑰 (API Key) 就像是你家的「鑰匙」或是「信用卡卡號」。</p>
       <p>把金鑰寫在 `index.html` 或任何前端 JavaScript 檔案中，就等於是把你家的鑰匙掛在門口，或是把信用卡卡號貼在公佈欄上。</p>
       
@@ -198,7 +248,7 @@
 
     <!-- Part 2: The Correct Architecture -->
     <section id="architecture">
-      <h1>「前後分離」：最安全的架構 (餐廳比喻)</h1>
+      <h1><i class="fas fa-check-circle text-green-500"></i>「前後分離」：最安全的架構 (餐廳比喻)</h1>
       <p>我們用「餐廳」來比喻這個架構，你馬上就懂了：</p>
       
       <h3>🖥️ 前端 (店面櫃檯) - 你的 `index.html`</h3>
@@ -231,7 +281,7 @@
 
     <!-- Part 3: Step-by-Step Guide -->
     <section id="tutorial">
-      <h1>🚀 實戰教學：我們如何設定安全的 AI 助理</h1>
+      <h1><i class="fas fa-rocket text-blue-500"></i>實戰教學：我們如何設定安全的 AI 助理</h1>
       <p>這就是我們一步步完成的串接設定：</p>
 
       <h3>Step 1: 設定前端 (index.html)</h3>
@@ -306,7 +356,7 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
 
     <!-- Part 4: Debugging Journey -->
     <section id="debugging">
-      <h1>🔍 除錯之旅：我們如何與 AI 助理 (我) 一起解決問題</h1>
+      <h1><i class="fas fa-search text-purple-500"></i>除錯之旅：我們如何與 AI 助理 (我) 一起解決問題</h1>
       <p>身為你的「程式夥伴」，我的工作就是讀懂這些「錯誤訊息」。這些錯誤其實是**最有用的線索**！</p>
       <p>回顧一下我們的破案過程：</p>
 
@@ -349,20 +399,22 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
     </section>
 
     <!-- 
-      ⭐️ [新增] 5. FAQ 常見問題區塊
+      ✅ [新增] 5. FAQ 常見問題區塊
     -->
     <section id="faq">
-      <h1>❓ 常見問題 (FAQ)</h1>
+      <h1><i class="fas fa-question-circle text-orange-500"></i>常見問題 (FAQ)</h1>
       <p>這裡總結了我們在除錯時遇到的幾個最關鍵的「為什麼」。</p>
       
       <div class="space-y-4">
         <!-- Q1 -->
-        <div class="border border-gray-200 rounded-lg">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50">
+        <div class="border border-gray-200 rounded-lg shadow-sm">
+          <!-- ✅ [版面調整] 將圖示移到右側 -->
+          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
             <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼金鑰放在前端(index.html)會動，移到後台就不行了？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500"></i>
+            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
           </div>
-          <div class="faq-answer p-4 sm:p-5 border-t border-gray-200">
+          <!-- ✅ [版面調整] 移除多餘邊框，調整 padding -->
+          <div class="faq-answer">
             <p>這是因為「前端」和「後台」是兩個**完全不同**的電腦！</p>
             <ul class="mt-2">
               <li><strong>放前端 (會動)：</strong> 程式碼是在「客人的瀏覽器」上執行。瀏覽器「直接」拿著金鑰去呼叫 Google AI。</li>
@@ -373,12 +425,12 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
         </div>
 
         <!-- Q2 -->
-        <div class="border border-gray-200 rounded-lg">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50">
+        <div class="border border-gray-200 rounded-lg shadow-sm">
+          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
             <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼我金鑰設定對了，還是出現 `models/... is not found`？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500"></i>
+            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
           </div>
-          <div class="faq-answer p-4 sm:p-5 border-t border-gray-200">
+          <div class="faq-answer">
             <p>這代表 Google **認證**了你的金鑰，但**拒絕**提供服務。有兩個主要原因：</p>
             <ol class="mt-2">
               <li><strong>(最可能的原因) 沒有綁定計費：</strong> Google 要求你的專案**必須連結到一個「計費帳戶」(Billing Account)**，才會「解鎖」Gemini 這些 AI 模型。即使是免費方案也需要綁定。</li>
@@ -388,12 +440,12 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
         </div>
         
         <!-- Q3 -->
-        <div class="border border-gray-200 rounded-lg">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50">
+        <div class="border border-gray-200 rounded-lg shadow-sm">
+          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
             <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: Cloudflare 的「純文字」變數和「加密」變數有什麼不同？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500"></i>
+            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
           </div>
-          <div class="faq-answer p-4 sm:p-5 border-t border-gray-200">
+          <div class="faq-answer">
             <p>兩者**都能**讓你的程式碼 (`env.GOOGLE_API_KEY`) 運作！</p>
             <ul>
               <li><strong>純文字 (Plaintext)：</strong> 你和其他有權限的協作者，都可以在 Cloudflare 介面上**看到**金鑰的完整內容。</li>
@@ -404,12 +456,12 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
         </div>
 
         <!-- Q4 -->
-        <div class="border border-gray-200 rounded-lg">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50">
+        <div class="border border-gray-200 rounded-lg shadow-sm">
+          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
             <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼我只是在 Cloudflare 網站上修改了變數，還要「重新部署」？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500"></i>
+            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
           </div>
-          <div class="faq-answer p-4 sm:p-5 border-t border-gray-200">
+          <div class="faq-answer">
             <p>這是一個很棒的觀念！</p>
             <p>「環境變數」(像我們的金鑰) 只有在**應用程式 (Worker) 啟動的那一刻**才會被讀取一次，然後載入到記憶體中。</p>
             <p>當你按下「儲存」變數時，你只是更新了 Cloudflare 的「設定資料庫」，但那個**已經在運行的** `ai-worker` 程式**並不知道**設定變了，它記憶體中還是舊的 (或空的) 金鑰。</p>
@@ -420,8 +472,8 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
     </section>
 
     <!-- 
-      ⭐️ [AIO 優化] 2. FAQPage Schema
-      這會告訴 Google 這一頁有 FAQ，搜尋結果中可能會直接顯示問答。
+      ✅ [AIO 優化] 2. FAQPage Schema
+      已更新為你的真實網址
     -->
     <script type="application/ld+json">
     {
@@ -459,7 +511,7 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
 
     <!-- Conclusion -->
     <section id="conclusion">
-      <h1>🎉 恭喜！你成功了！</h1>
+      <h1><i class="fas fa-party-horn text-yellow-500"></i>🎉 恭喜！你成功了！</h1>
       <p>經過這趟旅程，你不但成功讓 AI 助理上線，還學會了：</p>
       <ul>
         <li>如何保護 API 金鑰 (最重要的安全觀念)。</li>
@@ -507,21 +559,12 @@ const resp = await fetch(`${endpoint}?key=${key}`, {
         });
       });
 
-      // --- FAQ Accordion ---
+      // --- FAQ Accordion (折疊表單) ---
       const faqQuestions = document.querySelectorAll('.faq-question');
       faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
-          // 切換當前點擊的
+          // 切換當前點擊的 active 狀態
           question.classList.toggle('active');
-          
-          // (可選) 如果你希望一次只展開一個，取消註解下面這段
-          /*
-          faqQuestions.forEach(otherQuestion => {
-            if (otherQuestion !== question) {
-              otherQuestion.classList.remove('active');
-            }
-          });
-          */
         });
       });
 
