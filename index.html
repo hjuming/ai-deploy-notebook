@@ -68,10 +68,10 @@
       transform: translateY(-2px);
     }
 
-    /* 圖片庫樣式 */
+    /* 圖片庫樣式 - ✅ [版面更新] 更新為單欄排列 */
     .image-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: 1fr; /* 強制單欄 */
       gap: 1rem;
       margin: 1.5rem 0;
     }
@@ -179,7 +179,8 @@
       </ul>
       
       <!-- ✅ [圖片更新] 依照指示，插入圖片 2 和 3 -->
-      <div class="image-gallery grid-cols-1 md:grid-cols-2">
+      <!-- ✅ [版面更新] 移除 grid-cols-1 md:grid-cols-2，改用 CSS 控制為單欄 -->
+      <div class="image-gallery">
         <img src="https://i.urusai.cc/eGaJ2.jpg" alt="AI 夥伴分析用量圖表：請求與錯誤率暴增">
         <img src="https://i.urusai.cc/VqwiC.jpg" alt="API 金鑰用量暴增的圖表">
       </div>
@@ -188,7 +189,8 @@
       <p>不幸中的大幸是，我的帳戶似乎有新用戶的「促銷額度 (PROMOTION)」，剛好抵銷了這筆費用，總金額變成了 `$0.00`。</p>
       
       <!-- ✅ [圖片更新] 依照指示，插入圖片 4 和 5 -->
-      <div class="image-gallery grid-cols-1 md:grid-cols-2">
+      <!-- ✅ [版面更新] 移除 grid-cols-1 md:grid-cols-2，改用 CSS 控制為單欄 -->
+      <div class="image-gallery">
         <img src="https://i.urusai.cc/86YvM.jpg" alt="AI 夥伴分析帳單明細：確認金鑰已遭惡意濫用">
         <img src="https://i.urusai.cc/xrJG1.jpg" alt="天價帳單明細，顯示巨額費用和促銷抵銷">
       </div>
