@@ -4,28 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO 標籤 -->
-  <title>我的 AI 助理安全部署筆記：從金鑰外洩到架構重整的 48 小時</title>
+  <!-- SEO 標籤 --><title>我的 AI 助理安全部署筆記：從金鑰外洩到架構重整的 48 小時</title>
   <meta name="description" content="一份真實的學習筆記，記錄一個初學者如何處理 API 金鑰外洩、巨額帳單，並在 48 小時內重構前後端架構，最終成功部署安全 AI 助理的完整過程。">
   <meta name="keywords" content="API 金鑰外洩, API Key, Google Gemini, Cloudflare Workers, Cloudflare Pages, GitHub Actions, 前後台分離, 401, 404, 502, Missing API Key, 學習筆記">
   
-  <!-- Open Graph (社群分享標籤) -->
-  <meta property="og:title" content="我的 AI 助理安全部署筆記：從金鑰外洩到架構重整的 48 小時">
+  <!-- Open Graph (社群分享標籤) --><meta property="og:title" content="我的 AI 助理安全部署筆記：從金鑰外洩到架構重整的 48 小時">
   <meta property="og:description" content="一份真實的學習筆記，記錄一個初學者如何處理 API 金鑰外洩、巨額帳單，並在 48 小時內重構前後端架構，最終成功部署安全 AI 助理的完整過程。">
   <meta property="og:type" content="article">
-  <!-- ✅ [圖片更新] 已更新為你指定的代表圖 -->
   <meta property="og:image" content="https://i.urusai.cc/a3u6a.jpg">
   <meta property="og:locale" content="zh_TW">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
+  <!-- Twitter Card --><meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="我的 AI 助理安全部署筆記：從金鑰外洩到架構重整的 48 小時">
   <meta name="twitter:description" content="一份真實的學習筆記，記錄一個初學者如何處理 API 金鑰外洩、巨額帳單，並在 48 小時內重構前後端架構，最終成功部署安全 AI 助理的完整過程。">
-  <!-- ✅ [圖片更新] 已更新為你指定的代表圖 -->
   <meta name="twitter:image" content="https://i.urusai.cc/a3u6a.jpg">
 
-  <!-- 網頁樣式 (Tailwind & Fonts) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 網頁樣式 (Tailwind & Fonts) --><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -98,8 +92,7 @@
   <!-- 
     ✅ [AIO 優化] 1. Article Schema
     已更新為你的真實網址和圖片
-  -->
-  <script type="application/ld+json">
+  --><script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -126,16 +119,14 @@
 </head>
 <body class="bg-gray-100 text-gray-800 leading-relaxed">
 
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-red-600 to-yellow-500 text-white shadow-lg">
+  <!-- Header --><header class="bg-gradient-to-r from-red-600 to-yellow-500 text-white shadow-lg">
     <div class="max-w-5xl mx-auto p-6 sm:p-8">
       <h1 class="text-3xl sm:text-4xl font-bold">我的 AI 助理安全部署筆記</h1>
       <p class="text-lg sm:text-xl mt-2">一個初學者的血淚紀念：從金鑰外洩到架構重整的 48 小時</p>
     </div>
   </header>
 
-  <!-- 導覽列 -->
-  <nav class="sticky top-0 bg-white shadow-md z-50">
+  <!-- 導覽列 --><nav class="sticky top-0 bg-white shadow-md z-50">
     <div class="max-w-5xl mx-auto px-4">
       <div class="hidden md:flex flex-wrap items-center justify-center space-x-1 lg:space-x-2 h-16">
         <a href="#danger" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">🚨 週末震撼</a>
@@ -147,17 +138,14 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <article class="max-w-5xl mx-auto p-4 sm:p-6 content">
+  <!-- Main Content --><article class="max-w-5xl mx-auto p-4 sm:p-6 content">
 
-    <!-- Introduction -->
-    <section>
+    <!-- Introduction --><section>
       <p class="text-lg sm:text-xl intro">這是一份特別的筆記。它記錄了我在這個週末（2025年11月1日-3日）所經歷的一切。我從一個興奮的初學者，把 AI 助理串接到我的網站上，到週五晚上發現 API 金鑰被盜用、收到 Google Cloud 寄來的巨額帳單和嚴重警告，然後花了整個週末，與我的 AI 程式夥伴一起，從零開始重構我的網站架構、學習前後端分離、搞懂 CI/CD 自動化部署，並在無數次的「鬼打牆」除錯後，最終成功的完整歷程。</p>
       <p>我希望這份筆記能給所有像我一樣的初學者一個最嚴厲的警惕，和最有價值的參考。</p>
     </section>
 
-    <!-- Part 1: The Nightmare Begins -->
-    <section id="danger">
+    <!-- Part 1: The Nightmare Begins --><section id="danger">
       <h1><i class="fas fa-bomb text-red-700"></i>章節一：週五晚上的震撼教育 (金鑰外洩)</h1>
       <p>一切都發生得很快。我一開始為了方便測試，犯了一個**最致命的錯誤**：我把 Google AI 的 API 金鑰 (API Key) **直接寫死在我的前端 `index.html` 檔案中**，並把它推送 (push) 到了公開的 GitHub 儲存庫。</p>
       
@@ -178,38 +166,51 @@
 
       <h3 class="mt-8">週五晚上的警示 (附圖)</h3>
       <p>到了週五晚上，我收到了 Google Cloud 的警示信，登入後看到了讓我心臟停止的畫面：</p>
-      <div class="image-gallery">
-        <img src="https://i.imgur.com/8fK9eWn.jpg" alt="API 用量暴增的圖表 [IMG_6596]">
-        <img src="https://i.imgur.com/L7r2vGj.jpg" alt="天價帳單明細 [IMG_6595]">
-        <img src="https://i.imgur.com/A9o7fQc.jpg" alt="AI 分析帳單確認金鑰外洩 [IMG_6598]">
+      
+      <!-- ✅ [圖片更新] 依照指示，插入圖片 1 -->
+      <div class="my-6">
+        <img src="https://i.urusai.cc/orXIm.PNG" alt="AI 夥伴給出的金鑰外洩處理建議" class="w-full rounded-lg shadow-md border">
       </div>
+
       <p>我的 AI 程式夥伴立刻幫我分析了這些截圖：</p>
       <ul>
-        <li>**異常流量 [IMG_6596]**：API 請求在 10 月 30 日突然飆升到近 900 萬次請求和 4000 萬個 Token。這絕對不是正常用量。</li>
-        <li>**天價帳單 [IMG_6595, IMG_6598]**：攻擊者在短短幾天內，用我的金鑰產生了超過 **$6,100 美元** (約 18 萬台幣) 的費用！</li>
+        <li>**異常流量**：API 請求在 10 月 30 日突然飆升到近 900 萬次請求和 4000 萬個 Token。這絕對不是正常用量。</li>
+        <li>**天價帳單**：攻擊者在短短幾天內，用我的金鑰產生了超過 **$6,100 美元** (約 18 萬台幣) 的費用！</li>
       </ul>
       
-      <h3 class="mt-8">幸運與警惕 (附圖)</h3>
-      <p>不幸中的大幸是，我的帳戶似乎有新用戶的「促銷額度 (PROMOTION)」，剛好抵銷了這筆費用，總金額變成了 `$0.00` [IMG_6599]。</p>
-      
-      <div class="image-gallery">
-        <img src="https://i.imgur.com/u7q1JtH.jpg" alt="帳單被促銷額度抵銷 [IMG_6599]">
-        <img src="https://i.imgur.com/D4s6fE8.jpg" alt="Google 的嚴重警告 [IMG_6600]">
+      <!-- ✅ [圖片更新] 依照指示，插入圖片 2 和 3 -->
+      <div class="image-gallery grid-cols-1 md:grid-cols-2">
+        <img src="https://i.urusai.cc/eGaJ2.jpg" alt="AI 夥伴分析用量圖表：請求與錯誤率暴增">
+        <img src="https://i.urusai.cc/VqwiC.jpg" alt="API 金鑰用量暴增的圖表">
       </div>
       
-      <p>Google 的警告 [IMG_6600] 非常清楚：「**金鑰必須立即作廢**」、「**額度已用盡**」、「**下次就是天價帳單**」。</s pan></p>
+      <h3 class="mt-8">幸運與警惕 (附圖)</h3>
+      <p>不幸中的大幸是，我的帳戶似乎有新用戶的「促銷額度 (PROMOTION)」，剛好抵銷了這筆費用，總金額變成了 `$0.00`。</p>
+      
+      <!-- ✅ [圖片更新] 依照指示，插入圖片 4 和 5 -->
+      <div class="image-gallery grid-cols-1 md:grid-cols-2">
+        <img src="https://i.urusai.cc/86YvM.jpg" alt="AI 夥伴分析帳單明細：確認金鑰已遭惡意濫用">
+        <img src="https://i.urusai.cc/xrJG1.jpg" alt="天價帳單明細，顯示巨額費用和促銷抵銷">
+      </div>
+      
+      <p>Google 的警告非常清楚：「**金鑰必須立即作廢**」、「**額度已用盡**」、「**下次就是天價帳單**」。</p>
+      
+      <!-- ✅ [圖片更新] 依照指示，插入圖片 6 -->
+      <div class="my-6">
+         <img src="https://i.urusai.cc/b06X2.jpg" alt="AI 夥伴總結警告：金鑰須作廢，額度已盡，下次將收費" class="w-full rounded-lg shadow-md border">
+      </div>
+
       <p>我立刻登入 Google Cloud，**刪除了這把被盜用的金鑰**，並開始了這個漫長的週末修復之旅。</p>
     </section>
 
-    <!-- Part 2: The Correct Architecture -->
-    <section id="architecture">
+    <!-- Part 2: The Correct Architecture --><section id="architecture">
       <h1><i class="fas fa-shield-alt text-green-600"></i>章節二：建立安全的新架構 (前後端分離)</h1>
       <p>我學到的教訓是：**金鑰絕對不能出現在前端**。我們必須重構架構，把「前端 (店面)」和「後端 (廚房)」徹底分開。</p>
       
       <div class="grid md:grid-cols-2 gap-6 my-6">
         <div class="bg-white p-6 rounded-lg shadow">
           <h3 class="mt-0 text-xl font-semibold"><i class="fas fa-store mr-2 text-blue-500"></i>前端 (Cloudflare Pages)</h3>
-          <p>這是我的 `xiaoliuqiu` 專案，也就是 `index.html` [cite: index.html]。</p>
+          <p>這是我的 `xiaoliuqiu` 專案，也就是 `index.html`。</p>
           <ul>
             <li><strong>角色：</strong> 店面櫃檯。</li>
             <li><strong>任務：</strong> 顯示 UI、接收使用者輸入。</li>
@@ -219,7 +220,7 @@
         </div>
         <div class="bg-white p-6 rounded-lg shadow">
           <h3 class="mt-0 text-xl font-semibold"><i class="fas fa-server mr-2 text-gray-700"></i>後端 (Cloudflare Worker)</h3>
-          <p>這是我新建的 `ai-worker` 專案，也就是 `index.js` [cite: index.js]。</p>
+          <p>這是我新建的 `ai-worker` 專案，也就是 `index.js`。</p>
           <ul>
             <li><strong>角色：</strong> 廚房重地。</li>
             <li><strong>任務：</strong> 接收前端請求、呼叫 Google AI。</li>
@@ -230,8 +231,7 @@
       </div>
     </section>
 
-    <!-- Part 3: Step-by-Step Guide -->
-    <section id="tutorial">
+    <!-- Part 3: Step-by-Step Guide --><section id="tutorial">
       <h1><i class="fas fa-cogs text-blue-500"></i>章節三：設定全自動化部署 (GitHub Actions)</h1>
       <p>在這次重構中，我們不再「手動」上傳程式碼。我們設定了「GitHub Actions」(自動化部署)，只要我一修改 GitHub 上的程式碼，它就會**自動**幫我部署到 Cloudflare，並且**自動把金鑰安全地注入**。</p>
       <p>這是我們成功的關鍵，它解決了所有「金鑰消失」和「版本錯亂」的問題。</p>
@@ -246,7 +246,7 @@
       <p>(這張圖就是我們卡關最久的地方：`CF_API_TOKEN` 和 `CF_ACCOUNT_ID` 一開始是錯的，導致 `401 Authentication Error`)</p>
 
       <h3>2. 建立「前端」自動部署 (deploy.yml)</h3>
-      <p>我們在 `.github/workflows/deploy.yml` [cite: deploy.yml] 設定了部署「前端」的規則。</p>
+      <p>我們在 `.github/workflows/deploy.yml` 設定了部署「前端」的規則。</p>
       <pre><code># .github/workflows/deploy.yml
 name: Deploy to Cloudflare Pages
 on:
@@ -269,7 +269,7 @@ jobs:
 </code></pre>
 
       <h3>3. 建立「後端」自動部署 (deploy-worker.yml)</h3>
-      <p>這是我學到最重要的一課！我們建立了**第二個**部署檔案 `deploy-worker.yml` [cite: p7 (previous turn)]，專門用來部署「後端」。</p>
+      <p>這是我學到最重要的一課！我們建立了**第二個**部署檔案 `deploy-worker.yml`，專門用來部署「後端」。</p>
       <pre><code># .github/workflows/deploy-worker.yml
 name: Deploy ai-worker
 on:
@@ -299,8 +299,7 @@ jobs:
 </code></pre>
     </section>
 
-    <!-- Part 4: Debugging Journey -->
-    <section id="debugging">
+    <!-- Part 4: Debugging Journey --><section id="debugging">
       <h1><i class="fas fa-search-plus text-purple-600"></i>章節四：12 小時的「鬼打牆」除錯之旅</h1>
       <p>這是我和「程式夥伴」一起「鬼打牆」12 小時的偵錯紀錄。**這也是我學到最多**的地方。我們一直被「紅鯡魚」(誤導人的線索) 欺騙。</p>
 
@@ -309,43 +308,43 @@ jobs:
         <p class="error-msg">... "models/gemini-pro is not found for API version v1beta" ...</p>
         <p><strong>我的錯誤診斷 (紅鯡魚)：</strong> 我以為是 `v1beta` 版本太舊，導致了錯誤。</p>
         <p><strong>真相：</strong> 問題不是 `v1beta`，而是 `gemini-pro` 這個模型在 `v1beta` 中真的「找不到了」。</p>
-        <p><strong>後果：</strong> 我把程式碼 [cite: index.js] 改成呼叫 `v1` 版本，這讓我們**走錯了第一步**。</p>
+        <p><strong>後果：</strong> 我把程式碼 改成呼叫 `v1` 版本，這讓我們**走錯了第一步**。</p>
       </div>
 
       <div class="border-l-4 border-red-500 pl-4 my-6">
         <h3 class="mt-0">鬼打牆 2：`404 Not Found` (當我們使用 `v1` 時)</h3>
         <p class="error-msg">... "models/gemini-pro is not found for API version v1" ...</p>
-        <p><strong>我的錯誤診斷 (紅鯡魚)：</strong> 我以為「既然 `v1` 也找不到，那一定是因為 Google 強制綁定帳單的專案 [cite: p11 (previous turn)] 必須使用更高級的 **Vertex AI API** [cite: p10 (previous turn)]」。</p>
-        <p><strong>真相：</strong> 還是錯了！Google 只是**不讓**我的專案 [cite: p10 (previous turn)] 使用 `Generative Language API` [cite: p1 (previous turn)] 而已。</p>
-        <p><strong>後果：</strong> 我們花了 10 個小時，錯誤地嘗試讓「Vertex AI」[cite: p10 (previous turn)] 運作。</p>
+        <p><strong>我的錯誤診斷 (紅鯡魚)：</strong> 我以為「既然 `v1` 也找不到，那一定是因為 Google 強制綁定帳單的專案 必須使用更高級的 **Vertex AI API**」。</p>
+        <p><strong>真相：</strong> 還是錯了！Google 只是**不讓**我的專案 使用 `Generative Language API` 而已。</p>
+        <p><strong>後果：</strong> 我們花了 10 個小時，錯誤地嘗試讓「Vertex AI」運作。</p>
       </div>
 
       <div class="border-l-4 border-yellow-500 pl-4 my-6">
         <h3 class="mt-0">鬼打牆 3：`401 Authentication Error` (Cloudflare 金鑰錯誤)</h3>
         <p class="error-msg">... {"code":10000,"message":"Authentication error"} ...</p>
         <p><strong>診斷：</strong> 這是**真正的問題**！這不是 AI 錯誤，而是 GitHub 無法登入 Cloudflare。</p>
-        <p><strong>真相：</strong> 我 GitHub Secrets [cite: p2 (previous turn)] 裡的 `CF_API_TOKEN` 和 `CF_ACCOUNT_ID` [cite: p2 (previous turn)] 是**空白或錯誤的**。</p>
-        <p><strong>解決：</strong> 我們去 Cloudflare [cite: p1 (previous turn), p7 (previous turn)] 重新建立了**正確的** `CF_ACCOUNT_ID` [cite: p1 (previous turn)] 和有 `Pages` + `Workers` [cite: p6 (previous turn)] 權限的 `CF_API_TOKEN` [cite: p7 (previous turn)]，並填回 GitHub Secrets [cite: p2 (previous turn)]。</p>
+        <p><strong>真相：</strong> 我 GitHub Secrets 裡的 `CF_API_TOKEN` 和 `CF_ACCOUNT_ID` 是**空白或錯誤的**。</p>
+        <p><strong>解決：</strong> 我們去 Cloudflare 重新建立了**正確的** `CF_ACCOUNT_ID` 和有 `Pages` + `Workers` 權限的 `CF_API_TOKEN`，並填回 GitHub Secrets。</p>
       </div>
 
       <div class="border-l-4 border-red-500 pl-4 my-6">
         <h3 class="mt-0">鬼打牆 4：`401 API Key 權限不足` (Vertex AI 失敗)</h3>
         <p class="error-msg">... "API Key 權限不足或 Vertex AI 未啟用 (401/403)" ...</p>
-        <p><strong>診斷：</strong> 當我們修正了 Cloudflare 金鑰 [cite: p2 (previous turn)] 並成功部署「Vertex AI」版 `index.js` [cite: index.js] 後，立刻收到了這個錯誤。</p>
-        <p><strong>真相：</strong> 這證實了「Vertex AI」**是錯誤的道路**。Google 告訴我們：「你拿的 Google AI 金鑰 [cite: p2 (previous turn)]，沒有權限來開 Vertex AI [cite: p10 (previous turn)] 的門。」</p>
+        <p><strong>診斷：</strong> 當我們修正了 Cloudflare 金鑰 並成功部署「Vertex AI」版 `index.js` 後，立刻收到了這個錯誤。</p>
+        <p><strong>真相：</strong> 這證實了「Vertex AI」**是錯誤的道路**。Google 告訴我們：「你拿的 Google AI 金鑰，沒有權限來開 Vertex AI 的門。」</p>
         <p><strong>後果：</strong> 這讓我們終於醒悟！</p>
       </div>
 
       <div class="border-l-4 border-green-600 pl-4 my-6">
-        <h3 class="mt-0">最終的真相 (你最後的 `index.js` [cite: index.js])</h3>
+        <h3 class="mt-0">最終的真相 (你最後的 `index.js`)</h3>
         <p>我們終於回到了**原點**：</p>
         <ol>
-          <li>**API：** 必須使用 `Generative Language API` (`generativelanguage.googleapis.com`) [cite: index.js]。</li>
-          <li>**版本：** 必須使用 `v1beta` [cite: index.js] (因為 `v1` 對我的專案 [cite: p10 (previous turn)] 不可用)。</li>
+          <li>**API：** 必須使用 `Generative Language API` (`generativelanguage.googleapis.com`)。</li>
+          <li>**版本：** 必須使用 `v1beta` (因為 `v1` 對我的專案 不可用)。</li>
           <li>**模型：** **這才是真正的錯誤點！** `gemini-pro` 在 `v1beta` 中不可用，我們必須換成**別的**模型！</li>
         </ol>
-        <p>你最後成功的 `index.js` [cite: index.js] 程式碼，就是用了這個**最終正確**的組合：</p>
-        <pre><code>// 最終成功的 index.js [cite: index.js] 關鍵設定
+        <p>你最後成功的 `index.js` 程式碼，就是用了這個**最終正確**的組合：</p>
+        <pre><code>// 最終成功的 index.js 關鍵設定
 const PREFERRED_MODEL = "gemini-2.5-flash"; // ✅ 換成一個可用的模型！
 
 // ...
@@ -354,26 +353,25 @@ const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${PREF
       </div>
     </section>
 
-    <!-- Conclusion -->
-    <section id="conclusion">
+    <!-- Conclusion --><section id="conclusion">
       <h1><i class="fas fa-laugh-beam text-yellow-500"></i>章節五：最終成功！(與學到的教訓)</h1>
-      <p>在 2025 年 11 月 3 日早上 6 點 55 分，在我把 `index.js` [cite: index.js] 換回 `v1beta` + `gemini-2.5-flash` [cite: index.js] 並最後一次部署後... **它終於成功了！**</p>
+      <p>在 2025 年 11 月 3 日早上 6 點 55 分，在我把 `index.js` 換回 `v1beta` + `gemini-2.5-flash` 並最後一次部署後... **它終於成功了！**</p>
       
       <div class="my-6">
-        <img src="https://i.imgur.com/L1n8m4K.jpg" alt="AI 助理成功回覆的畫面 [截圖 2025-11-03 07.55.17]" class="w-full rounded-lg shadow-lg">
+        <img src="https://i.imgur.com/L1n8m4K.jpg" alt="AI 助理成功回覆的畫面" class="w-full rounded-lg shadow-lg">
       </div>
       
       <p>這 12 小時的鬼打牆雖然痛苦，但它強迫我學會了：</p>
       <ul class="text-lg">
         <li><strong>金鑰安全高於一切：</strong> 永遠不要在前端或公開的 GitHub 儲存庫中暴露 API 金鑰。</li>
         <li><strong>架構的重要性：</strong> 「前後端分離」是保護金鑰的唯一途徑。</li>
-        <li>**自動化是救贖：** GitHub Actions (CI/CD) [cite: p7 (previous turn), deploy.yml (previous turn)] 雖然設定很痛苦 (尤其是 `CF_API_TOKEN` [cite: p2 (previous turn)] 的權限)，但它一勞永逸地解決了「金鑰管理」和「版本混亂」的問題。</li>
-        <li><strong>錯誤訊息是你的朋友：**
+        <li>**自動化是救贖：** GitHub Actions (CI/CD) 雖然設定很痛苦 (尤其是 `CF_API_TOKEN` 的權限)，但它一勞永逸地解決了「金鑰管理」和「版本混亂」的問題。</li>
+        <li>**錯誤訊息是你的朋友：**
           <ul>
-            <li>`403/401 Authentication Error` [cite: log.txt (previous turns)] = 你的「Cloudflare 金鑰」[cite: p2 (previous turn)] 錯了。</li>
-            <li>`401 API Key 權限不足` [cite: p1 (previous turn)] = 你的「Google 金鑰」[cite: p2 (previous turn)] 權限 [cite: p1 (previous turn)] 錯了。</li>
-            <li>`404 Model Not Found` [cite: p1 (previous turn), p7 (previous turn)] = 你的「模型名稱」[cite: index.js] 或「API 版本」[cite: index.js] 選錯了。</li>
-            <li>`Missing API Key` [cite: p1 (previous turn), p1 (previous turn)] = 你的後端程式 [cite: index.js] 讀不到「環境變數」。</li>
+            <li>`403/401 Authentication Error` = 你的「Cloudflare 金鑰」錯了。</li>
+            <li>`401 API Key 權限不足` = 你的「Google 金鑰」權限 錯了。</li>
+            <li>`404 Model Not Found` = 你的「模型名稱」或「API 版本」選錯了。</li>
+            <li>`Missing API Key` = 你的後端程式 讀不到「環境變數」。</li>
           </ul>
         </li>
       </ul>
@@ -381,16 +379,14 @@ const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${PREF
     </section>
   </article>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-400 mt-12 py-6 px-4">
+  <!-- Footer --><footer class="bg-gray-800 text-gray-400 mt-12 py-6 px-4">
     <div class="max-w-5xl mx-auto text-center">
       <p>這份筆記由 Hjuming 與「程式夥伴」共同完成。</p>
       <p>2025年11月03日</p>
     </div>
   </footer>
 
-  <!-- JavaScript for Mobile Menu & FAQ Accordion -->
-  <script>
+  <!-- JavaScript for Mobile Menu & FAQ Accordion --><script>
     document.addEventListener('DOMContentLoaded', () => {
       // --- Mobile Menu ---
       const menuButton = document.getElementById('mobile-menu-button');
