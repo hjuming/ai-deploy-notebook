@@ -1,575 +1,222 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- 
-    ✅ [SEO 優化] 1. 網頁標題
-    使用精準、包含關鍵字的標題
-  -->
-  <title>AI 助理安全部署教學：保護 API 金鑰與前後台串接 (Cloudflare &amp; Google AI)</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
 
-  <!-- 
-    ✅ [SEO 優化] 2. 網頁描述 (Description)
-  -->
-  <meta name="description" content="一份給程式碼初學者的 AI 助理部署筆記。教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。">
+  <!-- 🏷️ 頁面變數（請依主題修改） -->
+  <script>
+    const topicTitle = "（請輸入主題名稱，例如：小琉球潛水指南）";
+    const topicDesc  = "（請輸入主題摘要，例如：探索海龜的故鄉、掌握潛點特色、裝備與安全注意，並收錄教練/店家推薦與行前須知。）";
+    const heroImage  = "https://i.urusai.cc/s4f2Y.png";
+    const topicColor = "teal"; // amber / teal / blue / cyan / emerald
+    const canonical  = "https://www.yuyeshanyin.com/guide/sample/";
+  </script>
 
-  <!-- 
-    ✅ [SEO 優化] 3. 關鍵字 (Keywords)
-  -->
-  <meta name="keywords" content="AI 助理, API 金鑰, Cloudflare Workers, Google Gemini, 前後台分離, API 安全, 部署教學, 程式碼初學者, Missing API Key, Model Not Found, hjuming, 嶼野山隱">
+  <!-- 🧭 SEO / AIO 基本設定 -->
+  <title id="meta-title"></title>
+  <meta id="meta-desc" name="description" />
+  <meta name="keywords" content="小琉球, 嶼野山隱, YuYe ShanYin Camping" />
 
-  <!-- 
-    ✅ [SEO 優化] 4. Open Graph (社群分享標籤)
-    已更新為你提供的網址和圖片！
-  -->
-  <meta property="og:title" content="AI 助理安全部署教學：保護 API 金鑰 (v4)">
-  <meta property="og:description" content="教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。">
-  <meta property="og:type" content="article">
-  <!-- ✅ 已更新為你的部署網址 -->
-  <meta property="og:url" content="https://ai-deploy-notebook.pages.dev/">
-  <!-- ✅ 已更新為你提供的圖片 -->
-  <meta property="og:image" content="https://i.urusai.cc/odvsO.jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:site_name" content="嶼野山隱 YuYe ShanYin Camping" />
+  <meta property="og:title" id="og-title" />
+  <meta property="og:description" id="og-desc" />
+  <meta property="og:url" id="og-url" />
+  <meta property="og:image" id="og-image" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" id="tw-title" />
+  <meta name="twitter:description" id="tw-desc" />
+  <meta name="twitter:image" id="tw-image" />
+  <link id="canonical" rel="canonical" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI 助理安全部署教學：保護 API 金鑰 (v4)">
-  <meta name="twitter:description" content="教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台。">
-  <!-- ✅ 已更新為你提供的圖片 -->
-  <meta name="twitter:image" content="https://i.urusai.cc/odvsO.jpeg">
+  <!-- 📍 JSON-LD 結構化資料（5 組） -->
+  <script id="jsonld" type="application/ld+json"></script>
 
-  <!-- 
-    ✅ [SEO 優化] 5. 標準網址 (Canonical)
-    已更新為你部署後的「真實網址」
-  -->
-  <link rel="canonical" href="https://ai-deploy-notebook.pages.dev/">
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.urusai.cc/dLe5k.png" type="image/png" />
+  <link rel="apple-touch-icon" href="https://i.urusai.cc/dLe5k.png" />
 
-
-  <!-- 網頁樣式 (Tailwind & Fonts) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind + 字體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;5S00;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Noto Sans TC', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    /* 導覽列的錨點偏移 (避免被蓋住) */
-    [id] { scroll-margin-top: 6rem; }
-    
-    /* ✅ [版面調整] 1. 統一內容排版
-    */
-    .content h1 { 
-      font-size: 1.75rem; /* 28px */ 
-      font-weight: 700; 
-      margin-top: 2rem; 
-      margin-bottom: 1rem; 
-      border-bottom: 2px solid #10b981; 
-      padding-bottom: 0.5rem;
-      /* ✅ 增加圖示間距 */
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter','Noto Sans TC',sans-serif;background:#f8fafc}
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+    /* 教學導覽 Chips */
+    #guide-topic-nav .chip{
+      @apply px-4 py-2 rounded-full border text-sm font-semibold whitespace-nowrap transition border-gray-300 text-gray-700 bg-white hover:bg-gray-50;
     }
-    .content h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; }
-    .content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
-    .content p { font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
-    .content code { background-color: #f3f4f6; color: #db2777; padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.9em; word-break: break-all; }
-    .content pre { background-color: #1f2937; color: #e5e7eb; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
-    .content pre code { background-color: transparent; color: inherit; padding: 0; }
-    .content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; padding-left: 0.5rem; }
-    .content ol { list-style-type: decimal; margin-left: 1.5rem; margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; padding-left: 0.5rem; }
-    .content .highlight { background-color: #fffbeb; color: #b45309; padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-weight: 600; }
-    .content .error-msg { background-color: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; overflow-x: auto; }
-    
-    /* ✅ [版面調整] 2. FAQ 折疊表單樣式 (更精緻)
-    */
-    .faq-question { 
-      cursor: pointer; 
-      transition: background-color 0.2s ease-out;
-    }
-    .faq-question:hover {
-      background-color: #f9fafb;
-    }
-    .faq-answer { 
-      max-height: 0; 
-      overflow: hidden; 
-      transition: max-height 0.3s ease-out, padding 0.3s ease-out; 
-      padding-left: 1.25rem;
-      padding-right: 1.25rem;
-    }
-    /* 當 active 時，展開答案 */
-    .faq-question.active + .faq-answer { 
-      max-height: 500px; /* 設一個足夠大的高度 */ 
-      padding-top: 1.25rem;
-      padding-bottom: 1.25rem;
-    }
-    /* 圖示旋轉 */
-    .faq-question .faq-icon { 
-      transition: transform 0.3s ease-out; 
-    }
-    .faq-question.active .faq-icon { 
-      transform: rotate(180deg); 
-    }
-    
-    /* 響應式字體調整 */
-    @media (min-width: 640px) {
-      .content h1 { font-size: 2.25rem; } .content h2 { font-size: 1.875rem; } .content h3 { font-size: 1.5rem; }
-      .content p { font-size: 1.125rem; } .content ul { font-size: 1.125rem; } .content ol { font-size: 1.125rem; }
-    }
-    
-    /* 導覽按鈕樣式 */
-    .nav-button { 
-      transition: all 0.2s ease-in-out; 
-    }
-    .nav-button:hover { 
-      background-color: #d1fae5; 
-      color: #065f46; 
-      transform: translateY(-2px);
-    }
+    /* 主題色 */
+    #guide-topic-nav .chip[data-theme="amber"]{@apply border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white;}
+    #guide-topic-nav .chip[data-theme="teal"]{@apply border-teal-500 text-teal-600 hover:bg-teal-500 hover:text-white;}
+    #guide-topic-nav .chip[data-theme="blue"]{@apply border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white;}
+    #guide-topic-nav .chip[data-theme="cyan"]{@apply border-cyan-500 text-cyan-600 hover:bg-cyan-500 hover:text-white;}
+    #guide-topic-nav .chip[data-theme="emerald"]{@apply border-emerald-500 text-emerald-600 hover:bg-emerald-500 hover:text-white;}
+    #guide-topic-nav .chip[aria-current="page"],#guide-topic-nav .chip[data-current="true"]{@apply text-white border-transparent shadow-md;}
+    #guide-topic-nav .chip[aria-current="page"][data-theme="amber"],#guide-topic-nav .chip[data-current="true"][data-theme="amber"]{@apply bg-amber-500;}
+    #guide-topic-nav .chip[aria-current="page"][data-theme="teal"],#guide-topic-nav .chip[data-current="true"][data-theme="teal"]{@apply bg-teal-500;}
+    #guide-topic-nav .chip[aria-current="page"][data-theme="blue"],#guide-topic-nav .chip[data-current="true"][data-theme="blue"]{@apply bg-blue-500;}
+    #guide-topic-nav .chip[aria-current="page"][data-theme="cyan"],#guide-topic-nav .chip[data-current="true"][data-theme="cyan"]{@apply bg-cyan-500;}
+    #guide-topic-nav .chip[aria-current="page"][data-theme="emerald"],#guide-topic-nav .chip[data-current="true"][data-theme="emerald"]{@apply bg-emerald-500;}
   </style>
 
-  <!-- 
-    ✅ [AIO 優化] 1. Article Schema
-    已更新為你的真實網址和圖片
-  -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "AI 助理安全部署教學：保護 API 金鑰與前後台串接 (Cloudflare & Google AI)",
-    "description": "一份給程式碼初學者的 AI 助理部署筆記。教你如何安全地將 API 金鑰放在 Cloudflare 環境變數，並串接前後台，解決 Missing API Key 與 404 Model Not Found 錯誤。",
-    "image": "https://i.urusai.cc/odvsO.jpeg",
-    "datePublished": "2025-11-03T02:00:00+08:00",
-    "dateModified": "2025-11-03T02:20:00+08:00",
-    "author": {
-      "@type": "Person",
-      "name": "程式夥伴 (AI 助理)"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Hjuming's Learning Notebook",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://i.imgur.com/g.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://ai-deploy-notebook.pages.dev/"
-    }
-  }
-  </script>
-
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WTBC36V2');</script>
 </head>
-<body class="bg-gray-50 text-gray-800 leading-relaxed">
 
-  <!-- Header -->
-  <header class="bg-teal-700 text-white shadow-lg">
-    <div class="max-w-5xl mx-auto p-4 sm:p-6">
-      <h1 class="text-3xl sm:text-4xl font-bold">我的 AI 助理學習筆記 🤖</h1>
-      <p class="text-lg sm:text-xl mt-2">如何安全地串接前後台，並與 AI 助理 (程式夥伴) 一起除錯</p>
-    </div>
-  </header>
+<body class="bg-gray-50">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTBC36V2"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-  <!-- 導覽列 -->
-  <nav class="sticky top-0 bg-white shadow-md z-50">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="flex items-center justify-between h-16">
-        <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:text-teal-700 hover:bg-gray-100">
-          <i class="fas fa-bars text-xl"></i>
-          <span class="ml-2 font-semibold">快速導覽</span>
+<!-- Header（與主頁一致） -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <a href="https://www.yuyeshanyin.com/" class="text-2xl font-bold text-teal-600">YuYe ShanYin Camping</a>
+      <div class="relative">
+        <button id="menu-btn" class="p-2 text-gray-700 hover:text-teal-600 hover:bg-gray-100 rounded-md" aria-expanded="false">
+          <span class="hidden sm:inline mr-2">探索更多</span>
+          <i id="menu-icon" class="fas fa-bars fa-lg transition-transform duration-300"></i>
         </button>
-        
-        <!-- 電腦版導覽 -->
-        <div class="hidden md:flex flex-wrap items-center justify-center space-x-1 lg:space-x-2">
-          <a href="#danger" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">金鑰危險！</a>
-          <a href="#architecture" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">安全架構</a>
-          <a href="#tutorial" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">實戰教學</a>
-          <a href="#debugging" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">除錯之旅</a>
-          <a href="#faq" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">常見問題 (FAQ)</a>
-          <a href="#conclusion" class="nav-button px-3 py-2 rounded-md text-sm font-semibold text-gray-700 hover:bg-gray-100">總結</a>
-        </div>
-      </div>
-      
-      <!-- 手機版下拉選單 -->
-      <div id="mobile-menu" class="hidden md:hidden pb-4">
-        <a href="#danger" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">🚨 最大的危險 (金鑰外洩)</a>
-        <a href="#architecture" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">✅ 正確的架構 (前後分離)</a>
-        <a href="#tutorial" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">🚀 實戰教學 (4 步驟)</a>
-        <a href="#debugging" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">🔍 除錯之旅 (破案線索)</a>
-        <a href="#faq" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">❓ 常見問題 (FAQ)</a>
-        <a href="#conclusion" class="block nav-button px-4 py-3 rounded-md text-base font-semibold text-gray-700 hover:bg-gray-100">🎉 恭喜！你成功了！</a>
+        <nav id="menu"
+             class="hidden opacity-0 absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg ring-1 ring-black/10 py-2 transition-opacity duration-150">
+          <div class="px-4 py-1 text-xs text-gray-400 font-semibold">嶼野山隱</div>
+          <a href="https://www.booking-owlnest.com/yuyeshanyin" target="_blank" rel="noopener" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">官網訂房</a>
+          <a href="https://www.facebook.com/profile.php?id=100090228313131" target="_blank" rel="noopener" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">Facebook</a>
+          <a href="https://www.instagram.com/yuyeshanyin_camping" target="_blank" rel="noopener" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">Instagram</a>
+          <a href="https://lin.ee/GAHQQlJ" target="_blank" rel="noopener" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">LINE 客服</a>
+          <div class="border-t my-2"></div>
+          <div class="px-4 py-1 text-xs text-gray-400 font-semibold">教學指南</div>
+          <a href="/guide/food" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">小琉球美食推薦</a>
+          <a href="/guide/diving/" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">小琉球潛水指南</a>
+          <a href="/guide/tungliu-ticket/" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">東琉聯營／取票教學</a>
+          <a href="/guide/transport" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">交通指南／常見問題</a>
+          <a href="/guide/tour" class="block px-4 py-2 hover:bg-gray-50 text-gray-700">加值行程／票券</a>
+        </nav>
       </div>
     </div>
-  </nav>
+  </div>
+</header>
 
-  <!-- Main Content -->
-  <article class="max-w-5xl mx-auto p-4 sm:p-6 content">
+<!-- HERO -->
+<section id="hero" class="relative w-full overflow-hidden" style="aspect-ratio:16/9;">
+  <img id="hero-img" src="" alt="" loading="lazy" class="w-full h-full object-cover">
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+  <div class="absolute bottom-0 left-0 p-6 sm:p-10">
+    <h1 id="hero-title" class="text-white text-3xl sm:text-5xl font-extrabold drop-shadow"></h1>
+    <p id="hero-sub" class="text-white/95 text-base sm:text-lg mt-2 drop-shadow"></p>
+  </div>
+</section>
 
-    <!-- Introduction -->
-    <section>
-      <p class="text-lg sm:text-xl intro">哈囉！我是程式夥伴。我們剛剛一起完成了一個超棒的任務：從一個有問題的 AI 助理，一路修正到一個功能完整、而且**安全**的 AI 服務。這份筆記會記錄我們學到的**最重要的事**，特別是針對像你一樣的程式碼初學者！</p>
-    </section>
+<!-- 教學指南分類導覽 -->
+<nav id="guide-topic-nav" class="flex justify-center gap-2 overflow-x-auto no-scrollbar mt-6 px-4"></nav>
 
-    <!-- Part 1: The Big Mistake -->
-    <section id="danger">
-      <!-- ✅ [版面調整] 增加標題圖示 -->
-      <h1><i class="fas fa-exclamation-triangle text-red-500"></i>最大的危險：千萬別把「金鑰」放在前端 (index.html)！</h1>
-      <p>這是我們學到的**第一課，也是最重要的一課**。API 金鑰 (API Key) 就像是你家的「鑰匙」或是「信用卡卡號」。</p>
-      <p>把金鑰寫在 `index.html` 或任何前端 JavaScript 檔案中，就等於是把你家的鑰匙掛在門口，或是把信用卡卡號貼在公佈欄上。</p>
-      
-      <h3>為什麼這很危險？</h3>
-      <ul>
-        <li>全世界的**自動化機器人 (Bot)** 都在 24 小時掃描 GitHub 和公開網頁。</li>
-        <li>它們專門尋找像 <code class="highlight">AIzaSy...</code> 這種格式的金鑰。</li>
-        <li>一旦找到，它們會**立刻盜用**你的金鑰，去做它們自己的事 (例如跑大量的 AI 運算)，然後**費用全部算在你的帳單上**！(就像我們擔心的那樣)</li>
-      </ul>
+<!-- 主要內容區 -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+  <section class="bg-white rounded-2xl shadow p-6 sm:p-8 leading-relaxed text-gray-800">
+    <h2 class="text-2xl font-bold mb-4">主題介紹區塊</h2>
+    <p>請在此填入各主題的主要文字內容或卡片區塊。</p>
+  </section>
 
-      <h3 class="mt-8">❌ 錯誤的做法 (金鑰外洩)</h3>
-      <p>千萬不要在你的 `index.html` 裡面這樣寫：</p>
-      <pre><code>&lt;!-- 絕對不要這樣做！ --&gt;
-&lt;script&gt;
-  const API_KEY = "AIzaSy...這是一串外洩的金鑰...ABC123";
-  
-  fetch(`httpss://google.ai.api/v1?key=${API_KEY}`, {
-    // ...
+  <!-- FAQ 區 -->
+  <section class="bg-white rounded-2xl shadow mt-8 p-6 sm:p-8">
+    <h2 class="text-xl font-bold mb-4">常見問題 FAQ</h2>
+    <details class="p-4 border-b last:border-none">
+      <summary class="cursor-pointer font-semibold text-gray-900">範例問題一？</summary>
+      <p class="mt-2 text-gray-700">這裡是回答內容。</p>
+    </details>
+  </section>
+
+  <!-- 返回首頁 -->
+  <div class="flex justify-center my-10">
+    <a href="https://www.yuyeshanyin.com/" class="px-5 py-3 rounded-xl bg-teal-600 text-white font-semibold hover:bg-teal-700 shadow">返回首頁</a>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white border-t">
+  <div class="max-w-7xl mx-auto py-8 px-4 text-center text-gray-500">
+    <p>© 2025 YuYe ShanYin Camping. 嶼野山隱 All rights reserved.</p>
+    <a href="https://www.yuyeshanyin.com/" class="text-sm text-teal-600 hover:underline">www.YuYeShanYin.com</a>
+  </div>
+</footer>
+
+<script>
+/* ----- 動態 SEO & JSON-LD & Chips 導覽  ----- */
+document.addEventListener('DOMContentLoaded',()=>{
+  const t = topicTitle.replace(/（.*?）/g,'').trim() || "嶼野山隱 教學指南";
+  const d = topicDesc || "嶼野山隱 YuYe ShanYin Camping 教學指南頁面模板";
+  const img = heroImage || "https://i.urusai.cc/s4f2Y.png";
+  const url = canonical || location.href;
+
+  // meta 同步
+  document.title = `${t}｜嶼野山隱 YuYe ShanYin Camping`;
+  document.getElementById("meta-title").innerText = document.title;
+  document.getElementById("meta-desc").setAttribute("content", d);
+  document.getElementById("og-title").setAttribute("content", document.title);
+  document.getElementById("og-desc").setAttribute("content", d);
+  document.getElementById("og-url").setAttribute("content", url);
+  document.getElementById("og-image").setAttribute("content", img);
+  document.getElementById("tw-title").setAttribute("content", document.title);
+  document.getElementById("tw-desc").setAttribute("content", d);
+  document.getElementById("tw-image").setAttribute("content", img);
+  document.getElementById("canonical").setAttribute("href", url);
+
+  // HERO 同步
+  document.getElementById("hero-title").textContent = t;
+  document.getElementById("hero-sub").textContent = d;
+  document.getElementById("hero-img").src = img;
+  document.getElementById("hero-img").alt = d;
+
+  // JSON-LD 注入
+  const jsonld = {
+    "@context":"https://schema.org",
+    "@graph":[
+      {"@type":"WebSite","url":"https://www.yuyeshanyin.com/","name":"嶼野山隱 YuYe ShanYin Camping"},
+      {"@type":"Organization","name":"嶼野山隱 YuYe ShanYin Camping","url":"https://www.yuyeshanyin.com/"},
+      {"@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"首頁","item":"https://www.yuyeshanyin.com/"},
+        {"@type":"ListItem","position":2,"name":t,"item":url}]},
+      {"@type":"Article","headline":t,"description":d,"image":img,"mainEntityOfPage":{"@type":"WebPage","@id":url}},
+      {"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"範例問題一？","acceptedAnswer":{"@type":"Answer","text":"這裡是回答內容。"}}]}
+    ]
+  };
+  document.getElementById("jsonld").textContent = JSON.stringify(jsonld,null,2);
+
+  // 教學導覽 Chips
+  const chips=[
+    {name:"美食推薦",url:"/guide/food",theme:"amber"},
+    {name:"潛水指南",url:"/guide/diving/",theme:"teal"},
+    {name:"取票教學",url:"/guide/tungliu-ticket/",theme:"blue"},
+    {name:"交通指南／常見問題",url:"/guide/transport",theme:"cyan"},
+    {name:"加值行程／票券",url:"/guide/tour",theme:"emerald"}
+  ];
+  const nav=document.getElementById("guide-topic-nav");
+  chips.forEach(c=>{
+    const a=document.createElement("a");
+    a.textContent=c.name;
+    a.href=c.url;
+    a.className="chip";
+    a.dataset.theme=c.theme;
+    if(c.theme===topicColor){a.dataset.current="true";}
+    nav.appendChild(a);
   });
-&lt;/script&gt;</code></pre>
-
-      <h3 class="mt-8">✅ 正確的做法 (前後分離)</h3>
-      <p>正確的做法是使用「前後分離」。我們必須建立一個「後台」(廚房)，只有它能保管「金鑰」(信用卡)。</p>
-    </section>
-
-    <!-- Part 2: The Correct Architecture -->
-    <section id="architecture">
-      <h1><i class="fas fa-check-circle text-green-500"></i>「前後分離」：最安全的架構 (餐廳比喻)</h1>
-      <p>我們用「餐廳」來比喻這個架構，你馬上就懂了：</p>
-      
-      <h3>🖥️ 前端 (店面櫃檯) - 你的 `index.html`</h3>
-      <ul>
-        <li>**用途：** 只負責跟客人 (使用者) 互動、點餐。</li>
-        <li>**它能做什麼：** 顯示漂亮的 UI 介面、接收客人的問題 (例如「下週五兩人」)。</li>
-        <li>**它不能做什麼：** **絕對不能**碰到 Google AI 金鑰 (信用卡)！</li>
-        <li>**它呼叫誰：** 它只會呼叫**自家的「後台 API」** (把訂單傳給廚房)。</li>
-      </ul>
-
-      <h3>🤖 後台 (廚房) - 你的 `ai-worker`</h3>
-      <ul>
-        <li>**用途：** 負責所有「機密」的工作。</li>
-        <li>**它能做什麼：**
-          <ol>
-            <li>安全地從「保險箱」讀取 Google AI 金鑰。</li>
-            <li>讀取「客製化食譜」 (你的 `yuye-knowledge.json` 知識庫)。</li>
-            <li>接收前端傳來的訂單 (問題)，並打電話給 Google AI。</li>
-          </ol>
-        </li>
-        <li>**金鑰在哪：** 安全地存放在 Cloudflare 的「環境變數和祕密」保險箱裡。</li>
-      </ul>
-
-      <h3>🔑 Google AI (食材供應商)</h3>
-      <ul>
-        <li>只有「後台」(廚房) 才有它的電話和「金鑰」(祕密合約)。</li>
-        <li>前端 (櫃檯) 甚至不知道它的存在！</li>
-      </ul>
-    </section>
-
-    <!-- Part 3: Step-by-Step Guide -->
-    <section id="tutorial">
-      <h1><i class="fas fa-rocket text-blue-500"></i>實戰教學：我們如何設定安全的 AI 助理</h1>
-      <p>這就是我們一步步完成的串接設定：</p>
-
-      <h3>Step 1: 設定前端 (index.html)</h3>
-      <p>我們修改了 `index.html`，讓它不再呼叫 Google，而是呼叫我們**後台 `ai-worker` 的完整網址**。</p>
-      <pre><code>&lt;!-- ✅ 安全版 AI 小幫手設定 --&gt;
-&lt;meta 
-  id="yysy-ai-config" 
-  data-endpoint="https://ai-worker.hjuming.workers.dev/api/assistant" 
-  data-token=""
-&gt;</code></pre>
-      <p>我們也修改了 `index.html` 裡的 JavaScript，讓它在呼叫時，**記得把「今天日期」一起傳過去** (這修復了 2024 年的錯誤！)。</p>
-      <pre><code>// ... 在 index.html 的 script 標籤中 ...
-body: JSON.stringify({
-  query: q, // 使用者的問題
-  context: {
-    current_date: new Date().toISOString() // ⭐️ 傳送今天日期！
-    // ... 其他資訊
-  }
-})</code></pre>
-
-      <h3>Step 2: 設定後端 (ai-worker/src/index.js)</h3>
-      <p>我們修改了後端 `index.js`，讓它去「保險箱」(`env`) 拿金鑰。</p>
-      <pre><code>// ... 在 ai-worker/src/index.js 中 ...
-
-// 1. 從保險箱 (環境變數) 讀取金鑰
-const key = env.GOOGLE_API_KEY; 
-
-// 2. 接收前端傳來的問題和日期
-const body = await req.json();
-const q = sanitize(body?.query || "");
-const context = body?.context || {};
-const currentDateStr = context.current_date 
-  ? `【今天日期】\n${sanitize(context.current_date, 40)}\n\n`
-  : "";
-
-// 3. 把「日期」和「問題」一起組合起來送給 Google
-const prompt =
-  `${systemPrompt}\n\n` +
-  currentDateStr + // ⭐️ 把日期加進去！
-  `【使用者問題】\n${q}`;
-
-// 4. 安全地呼叫 Google AI
-const resp = await fetch(`${endpoint}?key=${key}`, {
-  // ...
-});</code></pre>
-
-      <h3>Step 3: 設定 Cloudflare (保險箱)</h3>
-      <p>這就是我們存放金鑰的「保險箱」。我們學到**最重要的一課**：</p>
-      <p><span class="highlight">金鑰必須放在「後端」`ai-worker` 專案的「變數和祕密」中，**不是**放在「前端」`xiaoliuqiu` 專案！**</span></p>
-      <p>我們在 Cloudflare 中：</p>
-      <ol>
-        <li>進入 `Workers & Pages` → 點選 **`ai-worker`** (後端)。</li>
-        <li>點選 `設定` → `變數和祕密`。</li>
-        <li>在 `加密環境變數` (或 `純文字` 區) 新增：
-          <ul>
-            <li>**變數名稱:** <code class="highlight">GOOGLE_API_KEY</code></li>
-            <li>**值:** <code class="highlight">AIzaSy... (你全新的金鑰)</code></li>
-          </ul>
-        </li>
-        <li>儲存後，**重新部署 `ai-worker`**，讓它讀取新金鑰。</li>
-      </ol>
-      <p>（這張圖就是我們設定金鑰的關鍵頁面！）</p>
-      <img src="https://i.imgur.com/G5aJ8oP.png" alt="在 Cloudflare 的 ai-worker 專案中設定 GOOGLE_API_KEY" class="w-full rounded-lg shadow-md my-4">
-
-      <h3>Step 4: 設定 Google Cloud (啟用服務)</h3>
-      <p>我們學到的最後一課：光有金鑰還不夠，Google 必須同意讓你用。</p>
-      <ol>
-        <li>**啟用 API**：我們必須去 Google Cloud 專案 (`xiaoliuqiu`) 的「API 程式庫」，搜尋並「啟用」(Enable) `Generative Language API`。</li>
-        <li>**綁定計費**：Google 要求我們**必須綁定一個「計費帳戶」(Billing Account)**，才會「解鎖」Gemini 模型。即使是免費方案也必須綁定！</li>
-      </ol>
-    </section>
-
-    <!-- Part 4: Debugging Journey -->
-    <section id="debugging">
-      <h1><i class="fas fa-search text-purple-500"></i>除錯之旅：我們如何與 AI 助理 (我) 一起解決問題</h1>
-      <p>身為你的「程式夥伴」，我的工作就是讀懂這些「錯誤訊息」。這些錯誤其實是**最有用的線索**！</p>
-      <p>回顧一下我們的破案過程：</p>
-
-      <div class="border-l-4 border-teal-500 pl-4 my-6">
-        <h3 class="mt-0">線索 1：日期錯誤 (2024年)</h3>
-        <p><strong>錯誤：</strong> AI 回覆了 2024 年的日期。</p>
-        <p><strong>分析：</strong> AI 不知道「今天」是哪天。</p>
-        <p><strong>解決：</strong> 修改 `index.html`，把 `new Date().toISOString()` (今天日期) 透過 `context` 傳給後端。</p>
-      </div>
-
-      <div class="border-l-4 border-teal-500 pl-4 my-6">
-        <h3 class="mt-0">線索 2：`Missing GOOGLE_API_KEY` (缺少金鑰)</h3>
-        <p class="error-msg">發生錯誤 : API 500 : {"error":"Missing GOOGLE_API_KEY"}</p>
-        <p><strong>錯誤：</strong> 後端 `ai-worker` 說它「找不到金鑰」。</p>
-        <p><strong>分析：</strong> 我們把金鑰放錯地方了 (放在前端 `xiaoliuqiu` 專案的設定裡)。</p>
-        <p><strong>解決：</strong> 把 `GOOGLE_API_KEY` 變數移到**後端 `ai-worker`** 專案的「變數和祕密」設定中，並**重新部署**。</p>
-      </div>
-
-      <div class="border-l-4 border-teal-500 pl-4 my-6">
-        <h3 class="mt-0">線索 3：`models/... is not found` (找不到模型)</h3>
-        <p class="error-msg">發生錯誤 : API 502 : ... "models/gemini-pro is not found for API version v1beta"</p>
-        <p><strong>錯誤：</strong> Google AI 說：「我找不到你要求的模型」。</p>
-        <p><strong>分析：</strong> 這代表 Google 認證了你的金鑰，但**拒絕**提供服務。這是因為 Google 專案沒有**綁定「計費帳戶」**。</p>
-        <p><strong>解決：</strong> 登入 Google Cloud Console，為 `xiaoliuqiu` 專案綁定計費帳戶。</p>
-      </div>
-
-      <div class="border-l-4 border-red-500 pl-4 my-6">
-        <h3 class="mt-0">線索 4：發現金鑰被盜用 (帳單危機！)</h3>
-        <p><strong>錯誤：</strong> 你發現帳單有問題，意識到第一把放在 `index.html` 的金鑰已經外洩。</p>
-        <p><strong>分析：</strong> 舊金鑰已不安全，必須立刻作廢。</p>
-        <p><strong>解決：</strong>
-          <ol>
-            <li>立刻去 Google Cloud **「刪除」** 舊金鑰。</li>
-            <li>**「建立」** 一把全新的金鑰。</li>
-            <li>回到 Cloudflare 的 `ai-worker` 設定，用**「新金鑰」**去更新 `GOOGLE_API_KEY` 的值。</li>
-            <li>**重新部署 `ai-worker`**。</li>
-          </ol>
-        </p>
-      </div>
-    </section>
-
-    <!-- 
-      ✅ [新增] 5. FAQ 常見問題區塊
-    -->
-    <section id="faq">
-      <h1><i class="fas fa-question-circle text-orange-500"></i>常見問題 (FAQ)</h1>
-      <p>這裡總結了我們在除錯時遇到的幾個最關鍵的「為什麼」。</p>
-      
-      <div class="space-y-4">
-        <!-- Q1 -->
-        <div class="border border-gray-200 rounded-lg shadow-sm">
-          <!-- ✅ [版面調整] 將圖示移到右側 -->
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
-            <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼金鑰放在前端(index.html)會動，移到後台就不行了？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
-          </div>
-          <!-- ✅ [版面調整] 移除多餘邊框，調整 padding -->
-          <div class="faq-answer">
-            <p>這是因為「前端」和「後台」是兩個**完全不同**的電腦！</p>
-            <ul class="mt-2">
-              <li><strong>放前端 (會動)：</strong> 程式碼是在「客人的瀏覽器」上執行。瀏覽器「直接」拿著金鑰去呼叫 Google AI。</li>
-              <li><strong>放後台 (不行)：</strong> 程式碼是在「Cloudflare 的伺服器」(`ai-worker`) 上執行。伺服器需要讀取**它自己**的「環境變數」(保險箱)。</li>
-            </ul>
-            <p>你一開始遇到的 `Missing GOOGLE_API_KEY` 錯誤，就是因為我們把金鑰放到了 `xiaoliuqiu` (前端專案) 的保險箱，但 `ai-worker` (後台專案) 的保險箱是**空的**，它當然找不到金鑰！</p>
-          </div>
-        </div>
-
-        <!-- Q2 -->
-        <div class="border border-gray-200 rounded-lg shadow-sm">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
-            <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼我金鑰設定對了，還是出現 `models/... is not found`？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
-          </div>
-          <div class="faq-answer">
-            <p>這代表 Google **認證**了你的金鑰，但**拒絕**提供服務。有兩個主要原因：</p>
-            <ol class="mt-2">
-              <li><strong>(最可能的原因) 沒有綁定計費：</strong> Google 要求你的專案**必須連結到一個「計費帳戶」(Billing Account)**，才會「解鎖」Gemini 這些 AI 模型。即使是免費方案也需要綁定。</li>
-              <li><strong>(我們也修了) 模型名稱錯誤：</strong> 你可能請求了一個不存在或你沒權限的模型。這就是為什麼我們最後把 `index.js` 改成一個有「備用清單」(`gemini-1.5-flash-latest`, `gemini-pro`...) 的版本，讓它自動嘗試可用的模型。</li>
-            </ol>
-          </div>
-        </div>
-        
-        <!-- Q3 -->
-        <div class="border border-gray-200 rounded-lg shadow-sm">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
-            <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: Cloudflare 的「純文字」變數和「加密」變數有什麼不同？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
-          </div>
-          <div class="faq-answer">
-            <p>兩者**都能**讓你的程式碼 (`env.GOOGLE_API_KEY`) 運作！</p>
-            <ul>
-              <li><strong>純文字 (Plaintext)：</strong> 你和其他有權限的協作者，都可以在 Cloudflare 介面上**看到**金鑰的完整內容。</li>
-              <li><strong>加密 (Encrypted / Secret)：</strong> 金鑰**一經儲存，就再也無法被看見**。你只能「刪除」它或用新的值「覆蓋」它。這是**最安全**的做法，可以防止金鑰從 Cloudflare 內部被外洩。</li>
-            </ul>
-            <p>我們一開始用「純文字」是為了快速除錯，但**正式上線的專案，強烈建議你把所有金鑰都放在「加密」區塊**。</p>
-          </div>
-        </div>
-
-        <!-- Q4 -->
-        <div class="border border-gray-200 rounded-lg shadow-sm">
-          <div class="faq-question flex justify-between items-center p-4 sm:p-5 bg-gray-50 rounded-t-lg">
-            <h3 class="mt-0 mb-0 text-base sm:text-lg font-semibold">Q: 為什麼我只是在 Cloudflare 網站上修改了變數，還要「重新部署」？</h3>
-            <i class="faq-icon fas fa-chevron-down text-gray-500 ml-4"></i>
-          </div>
-          <div class="faq-answer">
-            <p>這是一個很棒的觀念！</p>
-            <p>「環境變數」(像我們的金鑰) 只有在**應用程式 (Worker) 啟動的那一刻**才會被讀取一次，然後載入到記憶體中。</p>
-            <p>當你按下「儲存」變數時，你只是更新了 Cloudflare 的「設定資料庫」，但那個**已經在運行的** `ai-worker` 程式**並不知道**設定變了，它記憶體中還是舊的 (或空的) 金鑰。</p>
-            <p><strong>「重新部署」(Redeploy) 的動作，就是在告訴 Cloudflare：「嘿！請你把這個 `ai-worker` 程式『重新啟動』，並在啟動時去讀取我剛剛儲存的最新變數！」</strong></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 
-      ✅ [AIO 優化] 2. FAQPage Schema
-      已更新為你的真實網址
-    -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "為什麼我的 API 金鑰放在前端(index.html)會動，移到後台(Cloudflare Worker)就不行了？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "這是因為「前端」和「後台」是兩個不同的執行環境。前端在「客人的瀏覽器」上執行，後台在「Cloudflare 伺服器」上執行。當你把金鑰移到後台時，你必須在「後台」專案 (例如 ai-worker) 的「環境變數」中設定金鑰，後台程式 (index.js) 才讀得到。如果你把金鑰設定在「前端」專案 (例如 xiaoliuqiu) 的環境變數中，後台專案是讀不到的，因此會顯示 'Missing GOOGLE_API_KEY' 錯誤。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "為什麼我金鑰設定對了，還是出現 'models/gemini-pro is not found' (404 找不到模型) 錯誤？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "這通常有兩個原因：1. (最主要原因) 你的 Google Cloud 專案尚未「綁定計費帳戶」(Billing Account)。Google 要求必須綁定計費帳戶才會解鎖 Gemini 等 AI 模型。 2. 你請求的模型名稱不正確，或是你的金鑰沒有該模型的權限。為此，我們在後端程式 index.js 中加入了「模型備用清單」(例如 gemini-1.5-flash-latest, gemini-pro)，讓程式自動嘗試可用的模型。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "為什麼我只是在 Cloudflare 網站上修改了環境變數，還要「重新部署」？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "「環境變數」(Environment Variables) 只有在應用程式 (Worker)「啟動時」才會被讀取一次。當你按下「儲存」變數時，你只是更新了 Cloudflare 的設定，但「已經在運行的」Worker 程式並不知道設定變了。「重新部署」(Redeploy) 的動作，就是在告訴 Cloudflare：「請你把這個 Worker 程式『重新啟動』，並在啟動時去讀取我剛剛儲存的最新變數！」"
-          }
-        }
-      ]
-    }
-    </script>
-
-
-    <!-- Conclusion -->
-    <section id="conclusion">
-      <h1><i class="fas fa-party-horn text-yellow-500"></i>🎉 恭喜！你成功了！</h1>
-      <p>經過這趟旅程，你不但成功讓 AI 助理上線，還學會了：</p>
-      <ul>
-        <li>如何保護 API 金鑰 (最重要的安全觀念)。</li>
-        <li>如何設定 Cloudflare Pages (前端) 和 Workers (後端)。</li>
-        <li>如何使用「環境變數」來安全地管理金鑰。</li>
-        <li>如何設定 Google Cloud API 權限與計費。</li>
-        <li>最重要的是：**如何閱讀錯誤訊息 (Error Log)，並與 AI 助理 (我！) 一起找出問題並解決它！**</li>
-      </ul>
-      <p>你做得非常棒，這份筆記就是你最好的證明！</p>
-    </section>
-  </article>
-
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-gray-400 mt-12 py-6 px-4">
-    <div class="max-w-5xl mx-auto text-center">
-      <p>這份筆記由「程式夥伴」為你產生。</p>
-      <p>2025年11月03日</p>
-    </div>
-  </footer>
-
-  <!-- JavaScript for Mobile Menu & FAQ Accordion -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // --- Mobile Menu ---
-      const menuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIcon = menuButton.querySelector('i');
-
-      menuButton.addEventListener('click', () => {
-        const isHidden = mobileMenu.classList.toggle('hidden');
-        if (isHidden) {
-          menuIcon.classList.remove('fa-times');
-          menuIcon.classList.add('fa-bars');
-        } else {
-          menuIcon.classList.remove('fa-bars');
-          menuIcon.classList.add('fa-times');
-        }
-      });
-
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-          menuIcon.classList.remove('fa-times');
-          menuIcon.classList.add('fa-bars');
-        });
-      });
-
-      // --- FAQ Accordion (折疊表單) ---
-      const faqQuestions = document.querySelectorAll('.faq-question');
-      faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-          // 切換當前點擊的 active 狀態
-          question.classList.toggle('active');
-        });
-      });
-
-    });
-  </script>
-
+});
+</script>
 </body>
 </html>
